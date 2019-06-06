@@ -64,21 +64,21 @@ public class ThesisProjectClinet {
 			//TODO 报错提示输入的params没有path或者path错误
 		}
 		//TODO 服务端检查输入参数
-		try {
-			boolean Thesis_exist = getProxy().Service_check_upload_params(paramsOfOpt.get("--fileName"));
-			//如果库中已有同名文章，询问客户是否还要继续上传
-			if(!Thesis_exist){
-				Scanner sc = new Scanner(System.in); 
-		         System.out.println("有同名文章，是否继续上传，输入y继续，其它任意键结束"); 
-		         String dicision = sc.nextLine(); 
-		         if(!"y".equals(dicision)){
-		        	 return;
-		         }
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			boolean Thesis_exist = false;//getProxy().Service_check_upload_params(paramsOfOpt.get("--fileName"));
+//			//如果库中已有同名文章，询问客户是否还要继续上传
+//			if(Thesis_exist){
+//				Scanner sc = new Scanner(System.in); 
+//		         System.out.println("有同名文章，是否继续上传，输入y继续，其它任意键结束"); 
+//		         String dicision = sc.nextLine(); 
+//		         if(!"y".equals(dicision)){
+//		        	 return;
+//		         }
+//			}
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		//读取filepath中的pdf文件，使用hdfs的api上传到hdfs集群中,并在hbase中写入相应信息，这两者要有一致性
 		try {
 //			System.out.print("开始传输文件");

@@ -32,27 +32,45 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 public class HbaseUtil {
 
-	public static Configuration config = HBaseConfiguration.create();
-	private static final String TABLE_NAME = "Theses";
-	private static String[] columnFamilies={"ThesisName","lables","author","creation_time","creation_user","subject","extra"};
+	public Configuration config;
+	private final String TABLE_NAME = "Thesis";
+	private String[] columnFamilies={"ThesisName","lables","author","creation_time","creation_user","subject","extra"};
 	
-    static { 
-//    	 //Add any necessary configuration files (hbase-site.xml, core-site.xml)
-    	config.addResource(new Path(System.getenv("HBASE_CONF_DIR"), "hbase-site.xml"));
-    	config.addResource(new Path(System.getenv("HADOOP_CONF_DIR"), "core-site.xml"));
-//    	 createSchemaTables(config);
-//    	 modifySchema(config);
-    	try {
+//    static { 
+////    	 //Add any necessary configuration files (hbase-site.xml, core-site.xml)
+////    	 createSchemaTables(config);
+////    	 modifySchema(config);
+//    	try {
+//    		config = HBaseConfiguration.create();
+//    		config.addResource(new Path("hbase-site.xml"));
+//    		config.addResource(new Path("core-site.xml"));
+//			createTable();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//    }	
+	
+	public HbaseUtil(){
+		init();
+	}
+	
+	private void init(){
+		config = HBaseConfiguration.create();
+		config.addResource(new Path("hbase-site.xml"));
+		config.addResource(new Path("core-site.xml"));
+		try {
 			createTable();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }	
+	}
+	
     
     //创建表
     @SuppressWarnings("deprecation")
-	public static void createTable() throws IOException {
+	public void createTable() throws IOException {
     	String tableName = TABLE_NAME;
     	Connection connection = ConnectionFactory.createConnection(config);
     	Admin admin = connection.getAdmin();
@@ -76,9 +94,15 @@ public class HbaseUtil {
     	
     }
     
+    public void insertOneThesisRecord(){
+    	
+    }
+    
     //根据文章名查询
     
-    public static ArrayList<Result> scanByArticleName(String articleNmae){
+    public ArrayList<Result> scanByArticleName(String articleNmae){
+    	
+    	
     	
     	ArrayList<Result> resultList = new ArrayList<Result>();
     	
@@ -93,17 +117,16 @@ public class HbaseUtil {
 			scan.setFilter(filterList);
 			ResultScanner scanner = table.getScanner(scan);
 			for (Result result : scanner) {
-				if(result == null)
-					break;
 				resultList.add(result);
-				////////////////////////////////
-				for (Cell keyValue : result.rawCells()) {  
-	                System.out.println("列：" + new String(keyValue.getFamilyArray())  
-	                        + "====值:" + new String(keyValue.getValueArray()));  
-	            } 
-				/////////////////////
 				
+				////////////////////////////////
+//				for (Cell keyValue : result.rawCells()) {  
+//					System.out.println("列：" + new String(keyValue.getFamilyArray())  
+//					+ "====值:" + new String(keyValue.getValueArray()));  
+//				} 
+				/////////////////////
 			}
+			System.out.print("resultlist.size()=" + resultList.size());
 			scanner.close();
 			
 		} catch (IOException e) {
