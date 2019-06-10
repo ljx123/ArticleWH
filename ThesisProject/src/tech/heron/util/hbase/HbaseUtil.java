@@ -95,7 +95,7 @@ public class HbaseUtil {
     }
     
     public void insertOneThesisRecord(){
-    	
+    	//先生成一个唯一id
     }
     
     //根据文章名查询

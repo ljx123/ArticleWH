@@ -13,6 +13,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.ipc.RPC;
 
 import tech.heron.exceptions.*;
+import tech.heron.interfaces.Client;
 import tech.heron.util.hdfs.*;
 
 
@@ -22,13 +23,13 @@ public class ThesisProjectClinet {
 	
 	private String[] input_params_opts = {"-upload"};
 	
-	private static String[] input_params_upload = {"--filepath","--fileName","--keywords","--author"}; 
+//	private static String[] input_params_upload = {"--filepath","--fileName","--keywords","--author"}; 
 	
 	public static void main(String[] args) {
 		//判断是什么操作，将操作后的参数解析出来
 		System.out.print(args[0]);
 		try {
-			Map<String, String> paramsOfOpt = getInputParamsOfOpt(args);
+			Map<String, String> paramsOfOpt = InputParamManagerImpl.getInstance().getInputParamsOfOpt(args);
 			switch (args[0]) {
 			case "-upload":
 				System.out.print("dddddddd");
@@ -44,21 +45,12 @@ public class ThesisProjectClinet {
 		}
 	}
 	
-	private static String getCorAuthor(Map<String, String> paramsOfOpt){
-		String[] split = paramsOfOpt.get("--author").split(",");
-		return split[0];
-	}
-	
-	private static String getFirAuthor(Map<String, String> paramsOfOpt){
-		String[] split = paramsOfOpt.get("--author").split(",");
-		return split[0];
-	}
 	
 	
 	
 	private static void uploadThesisPdf(Map<String, String> paramsOfOpt) {
 		// TODO Auto-generated method stub
-		checkParmas(paramsOfOpt , input_params_upload);
+		InputParamManagerImpl.getInstance().checkParmas(paramsOfOpt , Client.input_params_upload);
 		//读取输入参数中的filepath，没有filepath也要报错
 		if(!paramsOfOpt.keySet().contains("--filepath") || !new File(paramsOfOpt.get("--filepath")).exists() || !paramsOfOpt.get("--filepath").endsWith("pdf")){
 			//TODO 报错提示输入的params没有path或者path错误
@@ -83,7 +75,7 @@ public class ThesisProjectClinet {
 		try {
 //			System.out.print("开始传输文件");
 //			System.out.print(paramsOfOpt);
-			HdfsUtil.uploadThesis(paramsOfOpt.get(input_params_upload[0]), getFirAuthor(paramsOfOpt), paramsOfOpt.get("--fileName"));
+			HdfsUtil.uploadThesis(paramsOfOpt.get(Client.input_params_upload[0]), InputParamManagerImpl.getInstance().getFirAuthor(paramsOfOpt), paramsOfOpt.get("--fileName"));
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -91,61 +83,61 @@ public class ThesisProjectClinet {
 
 
 
-	private static boolean checkParmas(Map<String, String> paramsOfOpt, String[] params) {
-		// TODO Auto-generated method stub
-		Set<String> keySet = paramsOfOpt.keySet();
-		Iterator<String> iterator = keySet.iterator();
-		
-		while(iterator.hasNext()){
-			boolean flag = false;
-			String next = iterator.next();
-			for (int i = 0; i < params.length; i++) {
-				if(next == params[i]){
-					flag = true;
-				}
-			}
-			
-			if(!flag){
-				//TODO 抛异常，输入的key不符合规定
-			}
-		}
-		return true;
-	}
-
-
-
-	private static Map<String, String> getInputParamsOfOpt(String[] args) throws ThesisNullInputParamException {
-		// TODO Auto-generated method stub
-//		for (int i = 0; i < args.length; i++) {
-//			System.out.print(args[i] + " ");
+//	private static boolean checkParmas(Map<String, String> paramsOfOpt, String[] params) {
+//		// TODO Auto-generated method stub
+//		Set<String> keySet = paramsOfOpt.keySet();
+//		Iterator<String> iterator = keySet.iterator();
+//		
+//		while(iterator.hasNext()){
+//			boolean flag = false;
+//			String next = iterator.next();
+//			for (int i = 0; i < params.length; i++) {
+//				if(next == params[i]){
+//					flag = true;
+//				}
+//			}
+//			
+//			if(!flag){
+//				//TODO 抛异常，输入的key不符合规定
+//			}
 //		}
-		Map<String, String> map = new HashMap<String, String>();
-		
-		String key = null;
-		String value = null;
-		if(args.length == 0){
-			throw new ThesisNullInputParamException(ThesisNullInputParamException.NoParmaExceptions.NO_PARAM);
-		}
-		
-		for (int i = 1; i < args.length; i++) {
-			if(i%2 == 1){
-				key = args[i];
-//				System.out.print(args[i] + "--key");
-			}else{
-				value = args[i];
-				
-				String returnValue = map.put(key, value);
-				if(returnValue != null){
-					//TODO 抛出异常，输入的键有重复
-				}
-//				System.out.print(args[i] + "--value");
-				key = null;
-				value = null;
-			}
-		}
-		
-		return map;
-	}
+//		return true;
+//	}
+
+
+
+//	private static Map<String, String> getInputParamsOfOpt(String[] args) throws ThesisNullInputParamException {
+//		// TODO Auto-generated method stub
+////		for (int i = 0; i < args.length; i++) {
+////			System.out.print(args[i] + " ");
+////		}
+//		Map<String, String> map = new HashMap<String, String>();
+//		
+//		String key = null;
+//		String value = null;
+//		if(args.length == 0){
+//			throw new ThesisNullInputParamException(ThesisNullInputParamException.NoParmaExceptions.NO_PARAM);
+//		}
+//		
+//		for (int i = 1; i < args.length; i++) {
+//			if(i%2 == 1){
+//				key = args[i];
+////				System.out.print(args[i] + "--key");
+//			}else{
+//				value = args[i];
+//				
+//				String returnValue = map.put(key, value);
+//				if(returnValue != null){
+//					//TODO 抛出异常，输入的键有重复
+//				}
+////				System.out.print(args[i] + "--value");
+//				key = null;
+//				value = null;
+//			}
+//		}
+//		
+//		return map;
+//	}
 
 
 
