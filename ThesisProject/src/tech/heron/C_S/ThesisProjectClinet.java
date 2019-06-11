@@ -80,7 +80,7 @@ public class ThesisProjectClinet {
 //			System.out.print(paramsOfOpt);
 			String Txt_thesis_path = PdfToTxt.readPdf(paramsOfOpt.get(InputParamManager.input_params_upload[0]));
 			String hdfsPath = HdfsUtil.uploadThesis(paramsOfOpt.get(InputParamManager.input_params_upload[0]), InputParamManagerImpl.getInstance().getFirAuthor(paramsOfOpt), paramsOfOpt.get("--fileName"));
-			HdfsUtil.upload(Txt_thesis_path, hdfsPath);
+			HdfsUtil.uploadThesisTxt(Txt_thesis_path, hdfsPath , paramsOfOpt.get(InputParamManager.input_params_upload[1]));
 			getProxy().saveThesisMessageToHbase(paramsOfOpt, hdfsPath);
 		} catch (Exception e) {
 			// TODO: handle exception

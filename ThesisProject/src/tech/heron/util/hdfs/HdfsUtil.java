@@ -31,13 +31,20 @@ public class HdfsUtil {
 		IOUtils.copy(is, os);
 	}
 	
+	public static void uploadThesisTxt(String inputPath , String hdfsPath , String ThesisName) throws IOException, InterruptedException, URISyntaxException{
+		FileSystem fs = FileSystem.get(new URI("hdfs://ns1/"),new Configuration(),"heron");
+		FileInputStream is = new FileInputStream(new File(inputPath));
+		FSDataOutputStream os = fs.create(new Path("hdfs://ns1:9000"+hdfsPath + "/" + ThesisName + ".txt"));
+		IOUtils.copy(is, os);
+	}
+	
 	public static String uploadThesis(String inputPath,String author,String articleName) throws IOException, InterruptedException, URISyntaxException{
 		
 		FileSystem fs = FileSystem.get(new URI("hdfs://ns1/"),new Configuration(),"heron");
 		
 		String hdfsPath="/Thesis/"+author+"_"+articleName + System.currentTimeMillis() + "/" ;
 		FileInputStream is = new FileInputStream(inputPath);
-		Path dst = new Path(hdfsPath);
+		Path dst = new Path(hdfsPath + articleName + ".pdf");
 		fs.mkdirs(new Path(hdfsPath));
 		
 		FSDataOutputStream os = fs.create(dst);
