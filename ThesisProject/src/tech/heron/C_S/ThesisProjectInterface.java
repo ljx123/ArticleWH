@@ -1,5 +1,7 @@
 package tech.heron.C_S;
 
+import java.util.Map;
+
 public interface ThesisProjectInterface {
 	public static final long versionID = 1L;
 //	public String test();
@@ -10,4 +12,6 @@ public interface ThesisProjectInterface {
 	 * 返回false则相反
 	 * */
 	public boolean Service_check_upload_params(String thesisName);
+	
+	public boolean saveThesisMessageToHbase(Map<String, String> paramsOfOpt , String hdfsAddr);
 }

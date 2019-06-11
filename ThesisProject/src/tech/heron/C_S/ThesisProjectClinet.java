@@ -14,7 +14,9 @@ import org.apache.hadoop.ipc.RPC;
 
 import tech.heron.exceptions.*;
 import tech.heron.interfaces.Client;
+import tech.heron.interfaces.InputParamManager;
 import tech.heron.util.hdfs.*;
+import tech.heron.util.pdf.PdfToTxt;
 
 
 public class ThesisProjectClinet {
@@ -48,9 +50,9 @@ public class ThesisProjectClinet {
 	
 	
 	
-	private static void uploadThesisPdf(Map<String, String> paramsOfOpt) {
+	private static boolean uploadThesisPdf(Map<String, String> paramsOfOpt) {
 		// TODO Auto-generated method stub
-		InputParamManagerImpl.getInstance().checkParmas(paramsOfOpt , Client.input_params_upload);
+		InputParamManagerImpl.getInstance().checkParmas(paramsOfOpt , InputParamManager.input_params_upload);
 		//读取输入参数中的filepath，没有filepath也要报错
 		if(!paramsOfOpt.keySet().contains("--filepath") || !new File(paramsOfOpt.get("--filepath")).exists() || !paramsOfOpt.get("--filepath").endsWith("pdf")){
 			//TODO 报错提示输入的params没有path或者path错误
@@ -64,21 +66,28 @@ public class ThesisProjectClinet {
 		         System.out.println("有同名文章，是否继续上传，输入y继续，其它任意键结束"); 
 		         String dicision = sc.nextLine(); 
 		         if(!"y".equals(dicision)){
-		        	 return;
+		        	 return false;
 		         }
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
-		//读取filepath中的pdf文件，使用hdfs的api上传到hdfs集群中,并在hbase中写入相应信息，这两者要有一致性
+		//读取filepath中的pdf文件，使用hdfs的api上传到hdfs集群中,并在hbase中写入相应信息，这两者要有一致性和原子性
 		try {
 //			System.out.print("开始传输文件");
 //			System.out.print(paramsOfOpt);
-			HdfsUtil.uploadThesis(paramsOfOpt.get(Client.input_params_upload[0]), InputParamManagerImpl.getInstance().getFirAuthor(paramsOfOpt), paramsOfOpt.get("--fileName"));
+			String Txt_thesis_path = PdfToTxt.readPdf(paramsOfOpt.get(InputParamManager.input_params_upload[0]));
+			String hdfsPath = HdfsUtil.uploadThesis(paramsOfOpt.get(InputParamManager.input_params_upload[0]), InputParamManagerImpl.getInstance().getFirAuthor(paramsOfOpt), paramsOfOpt.get("--fileName"));
+			HdfsUtil.upload(Txt_thesis_path, hdfsPath);
+			getProxy().saveThesisMessageToHbase(paramsOfOpt, hdfsPath);
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 
 

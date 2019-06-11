@@ -10,6 +10,8 @@ import tech.heron.interfaces.InputParamManager;
 
 public class InputParamManagerImpl implements InputParamManager {
 	
+	
+	
 	private static InputParamManagerImpl instance;
 
 	public static  InputParamManagerImpl getInstance(){
@@ -24,12 +26,7 @@ public class InputParamManagerImpl implements InputParamManager {
 		
 	}
 	
-	
-	@Override
-	public String getFirstAuthor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 	@Override
@@ -100,6 +97,55 @@ public class InputParamManagerImpl implements InputParamManager {
 		// TODO Auto-generated method stub
 		String[] split = paramsOfOpt.get("--author").split(",");
 		return split[1];
+	}
+
+
+
+
+	@Override
+	public String generateHbaseColId(Map<String, String> paramsOfOpt) {
+		// TODO Auto-generated method stub
+		String aticleName = getArticleNmae(paramsOfOpt);
+		String FirstAuthorName = getFirAuthor(paramsOfOpt);
+		String CurrentTime =""+ System.currentTimeMillis();
+		return aticleName + "|" + FirstAuthorName + "|" + CurrentTime;
+	}
+
+
+
+
+	@Override
+	public String getArticleNmae(Map<String, String> paramsOfOpt) {
+		// TODO Auto-generated method stub
+		return paramsOfOpt.get(input_params_upload[1]);
+	}
+
+
+
+
+	@Override
+	public String[] getThesisLabels(Map<String, String> paramsOfOpt) {
+		// TODO Auto-generated method stub
+		String labels_str = paramsOfOpt.get(input_params_upload[2]);
+		return labels_str.split(",");
+	}
+
+
+
+	@Override
+	public String[] getAuthors(Map<String, String> paramsOfOpt) {
+		// TODO Auto-generated method stub
+		String authors_str = paramsOfOpt.get(input_params_upload[3]);
+		return authors_str.split(",");
+	}
+
+
+
+	@Override
+	public String[] getSubjects(Map<String, String> paramsOfOpt) {
+		// TODO Auto-generated method stub
+		String subjects_str = paramsOfOpt.get(input_params_upload[4]);
+		return subjects_str.split(",");
 	}
 
 

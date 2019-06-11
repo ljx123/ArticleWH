@@ -26,7 +26,7 @@ public class PdfToTxt {
 	 * @param file
 	 * @throws Exception
 	 */
-	public static void readPdf(String file) throws Exception {
+	public static String readPdf(String file) throws Exception {
 		// 是否排序
 		boolean sort = false;
 		// pdf文件名
@@ -79,7 +79,11 @@ public class PdfToTxt {
 			stripper.writeText(document, output);
 			
 			System.out.println(textFile + " 输出成功！");
-		} finally {
+			return textFile;
+		} catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}finally {
 			if (output != null) {
 				// 关闭输出流
 				output.close();
