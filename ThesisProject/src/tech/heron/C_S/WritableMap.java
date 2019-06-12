@@ -10,6 +10,11 @@ import org.apache.hadoop.io.Writable;
 public class WritableMap extends HashMap<String, String> implements Writable {
 
 	
+	public WritableMap() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 	@Override
 	public void write(DataOutput out) throws IOException {
 		// TODO Auto-generated method stub
