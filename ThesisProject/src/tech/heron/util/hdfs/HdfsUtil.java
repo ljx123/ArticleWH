@@ -27,14 +27,14 @@ public class HdfsUtil {
 	public static void upload(String inputPath , String hdfsPath) throws IllegalArgumentException, IOException, InterruptedException, URISyntaxException{
 		FileSystem fs = FileSystem.get(new URI("hdfs://ns1/"),new Configuration(),"heron");
 		FileInputStream is = new FileInputStream(new File(inputPath));
-		FSDataOutputStream os = fs.create(new Path("hdfs://ns1:9000"+hdfsPath));
+		FSDataOutputStream os = fs.create(new Path("hdfs://ns1"+hdfsPath));
 		IOUtils.copy(is, os);
 	}
 	
 	public static void uploadThesisTxt(String inputPath , String hdfsPath , String ThesisName) throws IOException, InterruptedException, URISyntaxException{
 		FileSystem fs = FileSystem.get(new URI("hdfs://ns1/"),new Configuration(),"heron");
 		FileInputStream is = new FileInputStream(new File(inputPath));
-		FSDataOutputStream os = fs.create(new Path("hdfs://ns1:9000"+hdfsPath + "/" + ThesisName + ".txt"));
+		FSDataOutputStream os = fs.create(new Path("hdfs://ns1"+hdfsPath + "/" + ThesisName + ".txt"));
 		IOUtils.copy(is, os);
 	}
 	
@@ -49,7 +49,7 @@ public class HdfsUtil {
 		
 		FSDataOutputStream os = fs.create(dst);
 		
-		System.out.print(hdfsPath);
+//		System.out.print(hdfsPath);
 		IOUtils.copy(is, os);
 		return hdfsPath;
 		/////////////////////////////////////////////////
