@@ -117,12 +117,12 @@ public class HbaseUtil {
     	//加入文章作者信息 通讯作者，第一作者，第二作者。。。。。。
     	String[] authors = InputParamManagerImpl.getInstance().getAuthors(paramsOfOpt);
     	for (int i = 0; i < authors.length; i++) {
-    		put.addColumn(columnFamilies[2].getBytes(), ("value"+i).getBytes(), labels[i].getBytes());
+    		put.addColumn(columnFamilies[2].getBytes(), ("value"+i).getBytes(), authors[i].getBytes());
 		}
     	//加入文章涉及的学科
     	String[] subjects = InputParamManagerImpl.getInstance().getSubjects(paramsOfOpt);
-    	for (int i = 0; i < authors.length; i++) {
-    		put.addColumn(columnFamilies[5].getBytes(), ("value"+i).getBytes(), labels[i].getBytes());
+    	for (int i = 0; i < subjects.length; i++) {
+    		put.addColumn(columnFamilies[5].getBytes(), ("value"+i).getBytes(), subjects[i].getBytes());
 		}
     	
     	//加入文章上传时间
