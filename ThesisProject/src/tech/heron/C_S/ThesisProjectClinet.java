@@ -29,7 +29,7 @@ public class ThesisProjectClinet {
 	
 	public static void main(String[] args) {
 		//判断是什么操作，将操作后的参数解析出来
-		System.out.print(args[0]);
+//		System.out.print(args[0]);
 		try {
 			WritableMap paramsOfOpt = InputParamManagerImpl.getInstance().getInputParamsOfOpt(args);
 			switch (args[0]) {
@@ -85,6 +85,9 @@ public class ThesisProjectClinet {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			//TODO 任务失败需要做一些工作，比如已经上传的文件需要删掉
+			
+			
 			return false;
 		}
 		return true;

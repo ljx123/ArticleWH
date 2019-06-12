@@ -1,5 +1,6 @@
 package tech.heron.C_S;
 
+import java.io.IOException;
 import java.util.Map;
 
 public interface ThesisProjectInterface {
@@ -13,5 +14,5 @@ public interface ThesisProjectInterface {
 	 * */
 	public boolean Service_check_upload_params(String thesisName);
 	
-	public boolean saveThesisMessageToHbase(WritableMap paramsOfOpt , String hdfsAddr);
+	public boolean saveThesisMessageToHbase(WritableMap paramsOfOpt , String hdfsAddr) throws IOException;
 }

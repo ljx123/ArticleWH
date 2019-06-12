@@ -102,7 +102,7 @@ public class HbaseUtil {
     	
     }
     
-    public void insertOneThesisRecord(WritableMap paramsOfOpt , String hdfsAddr){
+    public void insertOneThesisRecord(WritableMap paramsOfOpt , String hdfsAddr) throws IOException{
     	//先生成一个唯一id
     	String ColumnId = InputParamManagerImpl.getInstance().generateHbaseColId(paramsOfOpt);
     	//根据id生成一个put实例
@@ -132,15 +132,11 @@ public class HbaseUtil {
     	//加入文章在hdfs中的保存位置
     	put.addColumn(columnFamilies[6].getBytes(), "value".getBytes(), hdfsAddr.getBytes());
     	Connection connection;
-		try {
-			connection = ConnectionFactory.createConnection(config);
-			Table table = connection.getTable(TableName.valueOf(TABLE_NAME));
-			table.put(put);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
+    	connection = ConnectionFactory.createConnection(config);
+    	Table table = connection.getTable(TableName.valueOf(TABLE_NAME));
+    	table.put(put);
+	
+		
     	
     	
     }

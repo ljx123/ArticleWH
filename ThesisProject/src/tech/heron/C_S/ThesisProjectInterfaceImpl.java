@@ -1,5 +1,6 @@
 package tech.heron.C_S;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class ThesisProjectInterfaceImpl implements ThesisProjectInterface {
 
 	@Override
 	public boolean saveThesisMessageToHbase(WritableMap paramsOfOpt,
-			String hdfsAddr) {
+			String hdfsAddr) throws IOException {
 		new HbaseUtil().insertOneThesisRecord(paramsOfOpt, hdfsAddr);
 		return false;
 	}
