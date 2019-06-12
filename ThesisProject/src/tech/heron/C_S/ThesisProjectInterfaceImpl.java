@@ -19,7 +19,7 @@ public class ThesisProjectInterfaceImpl implements ThesisProjectInterface {
 	}
 
 	@Override
-	public boolean saveThesisMessageToHbase(Map<String, String> paramsOfOpt,
+	public boolean saveThesisMessageToHbase(WritableMap paramsOfOpt,
 			String hdfsAddr) {
 		new HbaseUtil().insertOneThesisRecord(paramsOfOpt, hdfsAddr);
 		return false;

@@ -35,6 +35,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import com.sun.xml.bind.v2.runtime.output.InPlaceDOMOutput;
 
 import tech.heron.C_S.InputParamManagerImpl;
+import tech.heron.C_S.WritableMap;
 import tech.heron.interfaces.InputParamManager;
 
 public class HbaseUtil {
@@ -101,7 +102,7 @@ public class HbaseUtil {
     	
     }
     
-    public void insertOneThesisRecord(Map<String, String> paramsOfOpt , String hdfsAddr){
+    public void insertOneThesisRecord(WritableMap paramsOfOpt , String hdfsAddr){
     	//先生成一个唯一id
     	String ColumnId = InputParamManagerImpl.getInstance().generateHbaseColId(paramsOfOpt);
     	//根据id生成一个put实例

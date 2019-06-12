@@ -13,5 +13,5 @@ public interface ThesisProjectInterface {
 	 * */
 	public boolean Service_check_upload_params(String thesisName);
 	
-	public boolean saveThesisMessageToHbase(Map<String, String> paramsOfOpt , String hdfsAddr);
+	public boolean saveThesisMessageToHbase(WritableMap paramsOfOpt , String hdfsAddr);
 }

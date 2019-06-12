@@ -31,7 +31,7 @@ public class ThesisProjectClinet {
 		//判断是什么操作，将操作后的参数解析出来
 		System.out.print(args[0]);
 		try {
-			Map<String, String> paramsOfOpt = InputParamManagerImpl.getInstance().getInputParamsOfOpt(args);
+			WritableMap paramsOfOpt = InputParamManagerImpl.getInstance().getInputParamsOfOpt(args);
 			switch (args[0]) {
 			case "-upload":
 				System.out.print("dddddddd");
@@ -50,7 +50,7 @@ public class ThesisProjectClinet {
 	
 	
 	
-	private static boolean uploadThesisPdf(Map<String, String> paramsOfOpt) {
+	private static boolean uploadThesisPdf(WritableMap paramsOfOpt) {
 		// TODO Auto-generated method stub
 		InputParamManagerImpl.getInstance().checkParmas(paramsOfOpt , InputParamManager.input_params_upload);
 		//读取输入参数中的filepath，没有filepath也要报错

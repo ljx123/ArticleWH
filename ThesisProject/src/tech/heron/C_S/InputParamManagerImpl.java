@@ -30,9 +30,9 @@ public class InputParamManagerImpl implements InputParamManager {
 
 
 	@Override
-	public Map<String, String> getInputParamsOfOpt(String[] args) throws ThesisNullInputParamException {
+	public WritableMap getInputParamsOfOpt(String[] args) throws ThesisNullInputParamException {
 		// TODO Auto-generated method stub
-		Map<String, String> map = new WritableMap();
+		WritableMap map = new WritableMap();
 		
 		String key = null;
 		String value = null;

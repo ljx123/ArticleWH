@@ -2,6 +2,7 @@ package tech.heron.interfaces;
 
 import java.util.Map;
 
+import tech.heron.C_S.WritableMap;
 import tech.heron.exceptions.ThesisNullInputParamException;
 
 public interface InputParamManager {
@@ -10,7 +11,7 @@ public interface InputParamManager {
 	static String[] input_params_upload = {"--filepath","--fileName","--keywords","--author","--subject"};
 
 	
-	public Map<String, String> getInputParamsOfOpt(String[] args) throws ThesisNullInputParamException;
+	public WritableMap getInputParamsOfOpt(String[] args) throws ThesisNullInputParamException;
 	
 	public boolean checkParmas(Map<String, String> paramsOfOpt, String[] params);
 	
