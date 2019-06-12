@@ -25,7 +25,7 @@ public class WritableMap extends HashMap<String, String> implements Writable {
 		String[] split = keyValues.split(",");
 		for (int i = 0; i < split.length; i++) {
 			String[] split2 = split[i].split("=");
-			this.put(split2[0], split2[0]);
+			this.put(split2[0], split2[1]);
 		}
 	}
 
