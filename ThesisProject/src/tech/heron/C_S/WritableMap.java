@@ -20,7 +20,7 @@ public class WritableMap extends HashMap<String, String> implements Writable {
 		// TODO Auto-generated method stub
 		String string = this.toString();
 		System.out.print("========" + string + "=========\n");
-		out.writeChars(string);
+		out.writeUTF(string);
 	}
 
 	@Override
