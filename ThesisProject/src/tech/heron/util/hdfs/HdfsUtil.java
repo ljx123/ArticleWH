@@ -34,10 +34,15 @@ public class HdfsUtil {
 		IOUtils.copy(is, os);
 	}
 	
+	//文本文件是用来给spark做离线分析用的，需要集中放到一个文件夹中，文本文件的格式为author_articleName[timemilis]
 	public static void uploadThesisTxt(String inputPath , String hdfsPath , String ThesisName) throws IOException, InterruptedException, URISyntaxException{
 		FileSystem fs = FileSystem.get(new URI("hdfs://ns1/"),new Configuration(),"heron");
 		FileInputStream is = new FileInputStream(new File(inputPath));
-		FSDataOutputStream os = fs.create(new Path("hdfs://ns1"+hdfsPath + "/" + ThesisName + ".txt"));
+		String outputPath = "/Thesis/ThesisTexts/" + hdfsPath.split("/")[2] + ".txt";
+		for (int i = 0; i < hdfsPath.split("/").length; i++) {
+			System.out.print(hdfsPath.split("/")[i] + "\n");
+		}
+		FSDataOutputStream os = fs.create(new Path(outputPath));
 		IOUtils.copy(is, os);
 	}
 	
