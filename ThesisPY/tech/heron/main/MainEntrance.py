@@ -57,6 +57,9 @@ def getDuplicateStringInfo(string_source):
     # 上面找出了source_str中所有与需要查重的文档中的重复部分，但会出现这种情况：
     # 需要查重的文档中的一个子集，与source_str中的多个部分有重复，这一点需要处理，要使得需要查重的文档的一个子集
     # 只对应源文档中的一个子集
+    list_tmp = []
+    # 先把
+
 
 
 
