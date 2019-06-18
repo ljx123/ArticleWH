@@ -1,4 +1,5 @@
 from pyspark import SparkContext, SparkConf
+import Fuctions
 
 duplicate_min_len = 6
 #TODO 把需要比较的文档的内容先转为字符串赋给string_compared变量
@@ -57,14 +58,13 @@ def getDuplicateStringInfo(string_source):
     # 上面找出了source_str中所有与需要查重的文档中的重复部分，但会出现这种情况：
     # 需要查重的文档中的一个子集，与source_str中的多个部分有重复，这一点需要处理，要使得需要查重的文档的一个子集
     # 只对应源文档中的一个子集
-    list_tmp = []
-    # 先把
-
-
-
-
 
     return result_list
+
+
+
+
+
 
 
 
@@ -87,6 +87,7 @@ DuplicationInfo = wholeTextFile.flatMapValues(getDuplicateStringInfo)
 
 # print(wholeTextFile.collect())
 print(DuplicationInfo.collect())
+print(Fuctions.arrangeSubjects(DuplicationInfo.collect(), duplicate_min_len))
 
 
 
