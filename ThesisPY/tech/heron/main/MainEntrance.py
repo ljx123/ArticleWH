@@ -3,7 +3,7 @@ import Fuctions
 
 duplicate_min_len = 6
 #TODO 把需要比较的文档的内容先转为字符串赋给string_compared变量
-string_compared = 'o 复制设备里的文件到电脑'
+string_compared = '它是 Android 开发/测试人员不可替代的强大工\r\n具，也是 Android 设备玩家的好玩具。\r\n持续更新中，'
 
 #RRD通过flapMapValue()方法调用这个方法，这个方法的返回值为一个list，list中的元素为
 # ‘(传入文件的start_index,传入文件的stop_index),（要比较的文件的start_index，要比较的文件的stop_index）’
@@ -86,7 +86,7 @@ wholeTextFile = sc.wholeTextFiles('hdfs://hadoop1:9000/Thesis/ThesisTexts')
 DuplicationInfo = wholeTextFile.flatMapValues(getDuplicateStringInfo)
 
 # print(wholeTextFile.collect())
-print(DuplicationInfo.collect())
+# print(DuplicationInfo.collect())
 print(Fuctions.arrangeSubjects(DuplicationInfo.collect(), duplicate_min_len))
 
 

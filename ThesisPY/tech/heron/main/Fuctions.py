@@ -17,28 +17,29 @@ def getSubjectStopIndex(elem):
 
 def shrinkToLeft(elem , offset):
     new_elem = []
-    new_elem.append(elem[0])
     new_source_tuple = (elem[1][0][0] , elem[1][0][1] - offset)
     new_compared_tuple = (elem[1][1][0] , elem[1][1][0] - offset)
     new_elem.append(new_source_tuple)
     new_elem.append(new_compared_tuple)
-    return new_elem
+    return (elem[0] , new_elem)
 
 def shrinkToRight(elem , offset):
     new_elem = []
-    new_elem.append(elem[0])
     new_source_tuple = (elem[1][0][0] + offset , elem[1][0][1])
-    new_compared_tuple = (elem[1][1][0] + offset , elem[1][1][0])
+    new_compared_tuple = (elem[1][1][0] + offset , elem[1][1][1])
     new_elem.append(new_source_tuple)
     new_elem.append(new_compared_tuple)
-    return new_elem
+    return (elem[0] , new_elem)
 
 def arrangeSubjects(list , duplicate_min_len):
     list_len = len(list)
     list_local = copy.deepcopy(list)
     #先按照传入元素的子集的开始位置进行排序
     list_local.sort(key=getSubjectStartIndex)
+    # print('/////////////////////////////////////')
+    #
     # print(list_local)
+    # print('/////////////////////////////////////')
     #去掉所有子集中被其它子集覆盖的子集
     list_local_len = len(list_local)
     i = 0
@@ -81,7 +82,7 @@ def arrangeSubjects(list , duplicate_min_len):
             list_local_len = len(list_local)
             continue
 
-        if getSubjectStartIndex(list_local[l]) < getSubjectStopIndex(list_tmp[-1]):
+        if getSubjectStartIndex(list_local[l]) > getSubjectStopIndex(list_tmp[-1]):
             list_tmp.append(list_local[l])
             list_local.pop(l)
             list_local_len = len(list_local)
@@ -95,15 +96,19 @@ def arrangeSubjects(list , duplicate_min_len):
     # list_result = copy.deepcopy(list_layers[0])
     for elem in list_layers[0]:
         list_sub_logic.append((getSubjectStartIndex(elem) , getSubjectStopIndex(elem)))
+    print('/////////////////////////////////////')
+    for elem in list_layers:
+        print(elem)
 
+    print('/////////////////////////////////////')
     #2 循环合并
     for i in range(len(list_layers)):
         if i ==0 :
             continue
         for elem1 in list_layers[i]:
             for j in range(len(list_layers[0])):
-                if getSubjectStartIndex(elem1) > getSubjectStartIndex(list_layers[0][j]):
-                    if j+1<len(list_layers[0]) and getSubjectStartIndex(list_layers[0][j+1]) - getSubjectStopIndex(list_layers[0][j]) > duplicate_min_len:
+                if getSubjectStartIndex(elem1) >= getSubjectStartIndex(list_layers[0][j]):
+                    if j+1<len(list_layers[0]) and (getSubjectStartIndex(list_layers[0][j+1]) - getSubjectStopIndex(list_layers[0][j])) > duplicate_min_len:
                         if getSubjectStopIndex(elem1) >= getSubjectStartIndex(list_layers[0][j+1]):
                             left_offset = getSubjectStopIndex(list_layers[0][j]) - getSubjectStartIndex(elem1) + 1
                             right_offset = getSubjectStopIndex(elem1) - getSubjectStartIndex(list_layers[0][j+1]) + 1
